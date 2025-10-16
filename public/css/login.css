@@ -1,0 +1,97 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+
+/* CSS Reset & Default Styles */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+  text-decoration: none;
+  color: inherit; 
+  scroll-behavior: smooth;
+}
+
+body {
+  height: 100vh;
+  width: 100vw;
+  color: #aaa6c3;
+  background-color: #000;
+  background-image: linear-gradient(to right, #ffffff20 1px, transparent 1px),
+    linear-gradient(to bottom, #ffffff20 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+.background {
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(125deg, #7b00ff40, transparent 60dvh),
+    linear-gradient(310deg, #7b00ff40, transparent 60dvh);
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+}
+
+.login {
+  border-radius: 5px;
+  padding: 30px;
+  height: 50vh;
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  /* backdrop-filter: blur(2px); */
+  background-color: #000000;
+  background-image: radial-gradient(
+    circle at 50% 0%,
+    #8c21ff40 1%,
+    #000000 70%
+  );
+  border: 1px solid #1f2937;
+}
+
+.login h3 {
+  padding: 0 20px;
+  font-size: 30px;
+  margin-bottom: 1rem;
+}
+
+form {
+  margin-top: 20px;
+  width: 100%;
+  max-width: 500px;
+  display: grid;
+  gap: 15px;
+}
+
+input[type="password"],
+input[type="text"],
+select {
+  width: 100%;
+  color: #aaa6c3;
+  font-weight: 500;
+  font-size: 15px;
+  padding: 12px;
+  background-color: #0e0e13;
+  border: 1px solid #1f2937;
+  border-radius: 0.75rem;
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 0.75rem;
+  background-color: #aaa6c3;
+  color: #0e0e13;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #c1bddf; 
+}
