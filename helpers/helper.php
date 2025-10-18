@@ -1,7 +1,7 @@
 <?php
 
 if (!function_exists('get_current_year')) {
-    function get_current_year(): int|string {
+    function get_current_year() {
         return date('Y');
     }
 }

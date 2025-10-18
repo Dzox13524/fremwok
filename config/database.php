@@ -4,4 +4,4 @@ define('DB_USER', 'root');
 define('DB_PASS', '');
 define('DB_NAME', 'utsphp');
 
-define('BASEURL', 'http://localhost/proyek-anda');
+define('BASEURL', 'http://framework.amat');

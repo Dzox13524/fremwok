@@ -1,10 +1,10 @@
 <?php
-
-class HomeController {
+class Homecontroller extends Controller {
     
     public function index() {
-        require_once 'public/views/index.php';
+        $this->view('index'); 
     }
+    
     public function about() {
         echo "<h1>Ini adalah Halaman About</h1>";
     }

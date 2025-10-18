@@ -1,8 +1,9 @@
 <?php
 class Pendaftarcontroller extends Controller {
+    
     public function index() {
         $data['judul'] = 'Formulir Pendaftaran';
-        $this->view('pendaftar/register', $data); 
+        $this->view('register', $data); 
     }
 
     public function registeraksi() {
@@ -41,13 +42,10 @@ class Pendaftarcontroller extends Controller {
 
     private function uploadFoto() {
         if (!isset($_FILES['foto']) || $_FILES['foto']['error'] != UPLOAD_ERR_OK) return false;
-        
         $file = $_FILES['foto'];
         $ekstensi = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
         $namaFileBaru = 'foto_' . uniqid() . '.' . $ekstensi;
-        
         $tujuanUpload = 'public/uploads/foto/' . $namaFileBaru;
-
         if (move_uploaded_file($file['tmp_name'], $tujuanUpload)) {
             return $namaFileBaru;
         }
@@ -56,13 +54,10 @@ class Pendaftarcontroller extends Controller {
 
     private function uploadTandaTangan($dataBase64) {
         if (empty($dataBase64) || strpos($dataBase64, 'data:image/png;base64,') === false) return false;
-        
         $data = str_replace('data:image/png;base64,', '', $dataBase64);
         $data = base64_decode($data);
         $namaFileBaru = 'ttd_' . uniqid() . '.png';
-        
         $tujuanUpload = 'public/uploads/ttd/' . $namaFileBaru;
-
         if (file_put_contents($tujuanUpload, $data)) {
             return $namaFileBaru;
         }
