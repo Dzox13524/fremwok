@@ -24,6 +24,7 @@ class Pendaftarcontroller extends Controller {
             return;
         }
         $data = $_POST;
+        $data['password'] = $_POST['password'];
         $data['foto'] = $namaFoto;
         $data['tanda_tangan'] = $namaTandaTangan;
         $data['jenis_kelamin'] = $_POST['jenisKelamin']; 
@@ -33,7 +34,7 @@ class Pendaftarcontroller extends Controller {
         if ($pendaftarModel->tambahDataPendaftar($data) > 0) {
             
             echo "<script>alert('Registrasi Berhasil!'); 
-                  window.location.href = '" . BASEURL . "/pendaftar/hasil';</script>";
+                  window.location.href = '" . BASEURL . "/profil';</script>";
             exit;
 
         } else {

@@ -24,7 +24,7 @@
             <div><h1>api</h1></div>
             <div><h1>api</h1></div>
             <div><h1>api</h1></div>
-            <a href="/login/index.html" class="button">
+            <a href="/register  " class="button">
               <h3>login</h3>
             </a>
           </div>

@@ -9,15 +9,16 @@ class Pendaftar_model {
 
     public function tambahDataPendaftar($data) {
         $query = "INSERT INTO " . $this->table . " 
-                    (nama, umur, jurusan, provinsi, kota, alamat, 
+                    (nama, umur, password, jurusan, provinsi, kota, alamat, 
                      jenis_kelamin, foto, tanda_tangan, tanggal_daftar)
                   VALUES
-                    (:nama, :umur, :jurusan, :provinsi, :kota, :alamat, 
+                    (:nama, :umur, :password, :jurusan, :provinsi, :kota, :alamat, 
                      :jenis_kelamin, :foto, :tanda_tangan, NOW())";
         
         $this->db->query($query);
         $this->db->bind('nama', $data['nama']);
         $this->db->bind('umur', $data['umur']);
+        $this->db->bind('password', $data['password']);
         $this->db->bind('jurusan', $data['jurusan']);
         $this->db->bind('provinsi', $data['provinsi']);
         $this->db->bind('kota', $data['kota']);
@@ -35,4 +36,17 @@ class Pendaftar_model {
         
         return $this->db->resultSet(); 
     }
+
+    public function getPendaftarByNama($nama) {
+        $this->db->query('SELECT * FROM ' . $this->table . ' WHERE nama = :nama');
+        $this->db->bind('nama', $nama);
+        return $this->db->single(); 
+    }
+
+     public function getUserById($id) {
+         $this->db->query('SELECT * FROM ' . $this->table . ' WHERE id = :id');
+         $this->db->bind('id', $id);
+         return $this->db->single();
+     }
+
 }

@@ -1,25 +1,29 @@
-
+<?php
+// (File: public/views/register.php)
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Formulir Pendaftaran</title>
+    <title><?php echo isset($data['judul']) ? $data['judul'] : 'Formulir Pendaftaran'; ?></title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
-    <link rel="stylesheet" href="../public/css/register.css" />
+    
+    <link rel="stylesheet" href="<?php echo BASEURL; ?>/public/css/register.css" /> 
+    
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-    <script src="<?php echo BASEURL; ?>/public/js/register.js"></script>
+    <script src="<?php echo BASEURL; ?>/public/js/register.js"></script> 
   </head>
   <body>
     <div class="container mt-5 mb-5">
       <div class="row justify-content-center">
         <div class="col-md-8 col-lg-6">
-<form
-    id="registrationForm"
-    action="<?php echo BASEURL; ?>/pendaftar/registeraksi"
-    method="post"
-    enctype="multipart/form-data"
+          <form
+            id="registrationForm"
+            action="<?php echo BASEURL; ?>/pendaftar/registeraksi" 
+            method="post" 
+            enctype="multipart/form-data"
           >
             <h2 class="mb-4 form-title">Register</h2>
 
@@ -27,6 +31,11 @@
               <label for="namaLengkap" class="form-label">Nama Lengkap</label>
               <input type="text" class="form-control" id="namaLengkap" name="nama" placeholder="Masukkan nama Anda" required />
             </div>
+
+            <div class="mb-3">
+              <label for="password" class="form-label">Password</label>
+              <input type="password" class="form-control" id="password" name="password" placeholder="Buat password Anda" required />
+              </div>
             <div class="mb-3">
               <label for="umur" class="form-label">Umur</label>
               <input type="number" class="form-control" id="umur" name="umur" placeholder="Contoh: 20" required/>

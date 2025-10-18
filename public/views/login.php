@@ -1,41 +1,42 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta
-      name="description"
-      content="Web portofolio sederhana menggunakan html css js dasar"
-    />
-    <link rel="icon" type="image/png" href="/assets/languange/phoenix.svg" />
-    <title>Khosyatullah Ahmad</title>
-    <link rel="stylesheet" href="../public/css/login.css" />
-
+    <title><?php echo isset($data['judul']) ? $data['judul'] : 'Login'; ?></title>
+    
+    <link rel="stylesheet" href="<?php echo BASEURL; ?>/public/css/login.css" /> 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="../public/js/login.js"></script>
 
   </head>
   <body>
     <div class="background">
       <div class="login">
-        <h3>Login</h3>
-        <form action="" id="loginForm">
+        <h3>Login Pendaftar</h3>
+        
+        <form action="<?php echo BASEURL; ?>/login/auth" method="POST" id="loginForm"> 
+        
           <input
             type="text"
-            name="username"
-            id="username"
-            placeholder="Username"
+            name="nama"      
+            id="nama"
+            placeholder="Nama Lengkap" 
+            required
           />
           <input
-            type="password"
-            name="password"
+            type="password"   
+            name="password"     
             id="password"
-            placeholder="password"
+            placeholder="Password"        
+            required
           />
-          <button type="submit" onclick="login()">Submit</button>
+          
+          <button type="submit">Login</button>
+          
         </form>
+         <p class="mt-4 text-sm">Belum punya akun? <a href="<?php echo BASEURL; ?>/pendaftar" class="text-purple-400 hover:text-white">Daftar di sini</a></p>
       </div>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   </body>
 </html>
