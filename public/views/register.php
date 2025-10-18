@@ -15,11 +15,10 @@
       <div class="row justify-content-center">
         <div class="col-md-8 col-lg-6">
           <form
-            id="registrationForm"
-            action="hasil.php"
-            method="post"
-            enctype="multipart/form-data" 
-            class="form-container"
+id="registrationForm" 
+action="/index.php?action=register" 
+method="post" 
+enctype="multipart/form-data"
           >
             <h2 class="mb-4 form-title">Register</h2>
 

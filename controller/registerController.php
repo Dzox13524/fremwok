@@ -1,77 +1,71 @@
 <?php
-require_once 'model/PendaftaranModel.php';
-
-class RegisterController {
-
+class Pendaftarcontroller extends Controller {
     public function index() {
-        require 'public/views/register.php';
+        $data['judul'] = 'Formulir Pendaftaran';
+        $this->view('pendaftar/register', $data); 
     }
 
-    public function simpan() {
-        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            header('Location: /register');
-            exit();
+    public function registeraksi() {
+        if ($_SERVER['REQUEST_METHOD'] != 'POST') {
+            header('Location: ' . BASEURL . '/pendaftar');
+            exit;
         }
 
-        $namaFileFoto = null;
-        if (isset($_FILES['foto']) && $_FILES['foto']['error'] === UPLOAD_ERR_OK) {
-            $uploadDirFoto = 'uploads/fotos/';
-            $namaFileFoto = uniqid() . '-' . basename($_FILES['foto']['name']);
-            $targetPathFoto = $uploadDirFoto . $namaFileFoto;
-
-            if (!is_dir($uploadDirFoto)) {
-                mkdir($uploadDirFoto, 0777, true);
-            }
-
-            if (!move_uploaded_file($_FILES['foto']['tmp_name'], $targetPathFoto)) {
-                header('Location: /register?error=foto_upload_failed');
-                exit();
-            }
+        $namaFoto = $this->uploadFoto();
+        if ($namaFoto === false) {
+            echo "<script>alert('Upload foto gagal!'); window.history.back();</script>";
+            return;
         }
 
-        $namaFileSignature = null;
-        if (isset($_POST['signature']) && !empty($_POST['signature'])) {
-            $signatureData = $_POST['signature'];
-            
-            $dataParts = explode(',', $signatureData);
-            $decodedData = base64_decode($dataParts[1]);
-
-            $uploadDirSignature = 'uploads/signatures/';
-            $namaFileSignature = uniqid() . '-signature.png';
-            $targetPathSignature = $uploadDirSignature . $namaFileSignature;
-            
-            if (!is_dir($uploadDirSignature)) {
-                mkdir($uploadDirSignature, 0777, true);
-            }
-
-            file_put_contents($targetPathSignature, $decodedData);
+        $namaTandaTangan = $this->uploadTandaTangan($_POST['signature']);
+        if ($namaTandaTangan === false) {
+            echo "<script>alert('Tanda tangan gagal disimpan!'); window.history.back();</script>";
+            return;
         }
+
+        $data = $_POST;
+        $data['foto'] = $namaFoto;
+        $data['tanda_tangan'] = $namaTandaTangan;
+        $data['jenis_kelamin'] = $_POST['jenisKelamin']; 
+
+        $pendaftarModel = $this->model('Pendaftar_model');
         
-        $data = [
-            'nama' => $_POST['nama'] ?? null,
-            'umur' => $_POST['umur'] ?? null,
-            'jurusan' => $_POST['jurusan'] ?? null,
-            'provinsi' => $_POST['provinsi'] ?? null,
-            'kota' => $_POST['kota'] ?? null,
-            'alamat' => $_POST['alamat'] ?? null,
-            'jenisKelamin' => $_POST['jenisKelamin'] ?? null,
-            'foto_path' => $namaFileFoto,
-            'signature_path' => $namaFileSignature,
-        ];
-
-        $db = require 'config/database.php';
-        $pendaftaranModel = new PendaftaranModel($db);
-
-        if ($pendaftaranModel->create($data)) {
-            header('Location: /register/sukses');
-            exit();
+        if ($pendaftarModel->tambahDataPendaftar($data) > 0) {
+            echo "<script>alert('Registrasi Berhasil!'); window.location.href = '" . BASEURL . "/pendaftar';</script>";
+            exit;
         } else {
-            header('Location: /register?error=db_error');
-            exit();
+            echo "<script>alert('Registrasi Gagal!'); window.history.back();</script>";
+            exit;
         }
     }
 
-    public function sukses() {
-        echo "<h1>Pendaftaran Anda Berhasil!</h1> <a href='/'>Kembali ke Home</a>";
+    private function uploadFoto() {
+        if (!isset($_FILES['foto']) || $_FILES['foto']['error'] != UPLOAD_ERR_OK) return false;
+        
+        $file = $_FILES['foto'];
+        $ekstensi = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+        $namaFileBaru = 'foto_' . uniqid() . '.' . $ekstensi;
+        
+        $tujuanUpload = 'public/uploads/foto/' . $namaFileBaru;
+
+        if (move_uploaded_file($file['tmp_name'], $tujuanUpload)) {
+            return $namaFileBaru;
+        }
+        return false;
+    }
+
+    private function uploadTandaTangan($dataBase64) {
+        if (empty($dataBase64) || strpos($dataBase64, 'data:image/png;base64,') === false) return false;
+        
+        $data = str_replace('data:image/png;base64,', '', $dataBase64);
+        $data = base64_decode($data);
+        $namaFileBaru = 'ttd_' . uniqid() . '.png';
+        
+        $tujuanUpload = 'public/uploads/ttd/' . $namaFileBaru;
+
+        if (file_put_contents($tujuanUpload, $data)) {
+            return $namaFileBaru;
+        }
+        return false;
     }
 }

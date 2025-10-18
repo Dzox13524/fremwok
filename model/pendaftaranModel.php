@@ -1,45 +1,28 @@
 <?php
-
-class PendaftaranModel {
+class pendaftaranModel {
+    private $table = 'pendaftar';
     private $db;
 
-    public function __construct($database) {
-        $this->db = $database;
-    }
-    public function create($data) {
-        try {
-            $query = "INSERT INTO pendaftaran 
-                        (nama_lengkap, umur, jurusan, provinsi, kota, alamat, jenis_kelamin, foto_path, signature_path) 
-                      VALUES 
-                        (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            
-            $stmt = $this->db->prepare($query);
-            
-            return $stmt->execute([
-                $data['nama'],
-                $data['umur'],
-                $data['jurusan'],
-                $data['provinsi'],
-                $data['kota'],
-                $data['alamat'],
-                $data['jenisKelamin'],
-                $data['foto_path'],
-                $data['signature_path']
-            ]);
-        } catch (PDOException $e) {
-            return false;
-        }
+    public function __construct() {
+        $this->db = new Database;
     }
 
-    public function findAll() {
-        try {
-            $query = "SELECT * FROM pendaftaran ORDER BY created_at DESC";
-            $stmt = $this->db->prepare($query);
-            $stmt->execute();
-            return $stmt->fetchAll();
-        } catch (PDOException $e) {
-            return [];
-        }
-    }
+    public function tambahDataPendaftar($data) {
+        $query = "INSERT INTO " . $this->table . " 
+                    (nama, umur, jurusan, provinsi, kota, alamat, jenis_kelamin, tanggal_daftar)
+                  VALUES
+                    (:nama, :umur, :jurusan, :provinsi, :kota, :alamat, :jenis_kelamin, NOW())";
+        $this->db->query($query);
+        $this->db->bind('nama', $data['nama']);
+        $this->db->bind('umur', $data['umur']);
+        $this->db->bind('jurusan', $data['jurusan']);
+        $this->db->bind('provinsi', $data['provinsi']);
+        $this->db->bind('kota', $data['kota']);
+        $this->db->bind('alamat', $data['alamat']);
+        $this->db->bind('jenis_kelamin', $data['jenis_kelamin']);
 
+        $this->db->execute();
+
+        return $this->db->rowCount();
+    }
 }
