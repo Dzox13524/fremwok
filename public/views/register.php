@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -8,17 +9,17 @@
     <link rel="stylesheet" href="../public/css/register.css" />
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
-    <script src="../public/js/register.js"></script>
+    <script src="<?php echo BASEURL; ?>/public/js/register.js"></script>
   </head>
   <body>
     <div class="container mt-5 mb-5">
       <div class="row justify-content-center">
         <div class="col-md-8 col-lg-6">
-          <form
-id="registrationForm" 
-action="/index.php?action=register" 
-method="post" 
-enctype="multipart/form-data"
+<form
+    id="registrationForm"
+    action="<?php echo BASEURL; ?>/pendaftar/registeraksi"
+    method="post"
+    enctype="multipart/form-data"
           >
             <h2 class="mb-4 form-title">Register</h2>
 

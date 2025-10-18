@@ -23,7 +23,6 @@ class Pendaftarcontroller extends Controller {
             echo "<script>alert('Tanda tangan gagal disimpan!'); window.history.back();</script>";
             return;
         }
-
         $data = $_POST;
         $data['foto'] = $namaFoto;
         $data['tanda_tangan'] = $namaTandaTangan;
@@ -32,14 +31,25 @@ class Pendaftarcontroller extends Controller {
         $pendaftarModel = $this->model('Pendaftar_model');
         
         if ($pendaftarModel->tambahDataPendaftar($data) > 0) {
-            echo "<script>alert('Registrasi Berhasil!'); window.location.href = '" . BASEURL . "/pendaftar';</script>";
+            
+            echo "<script>alert('Registrasi Berhasil!'); 
+                  window.location.href = '" . BASEURL . "/pendaftar/hasil';</script>";
             exit;
+
         } else {
             echo "<script>alert('Registrasi Gagal!'); window.history.back();</script>";
             exit;
         }
     }
 
+    public function hasil() {
+        $data['judul'] = 'Hasil Registrasi';
+        
+        $pendaftarModel = $this->model('Pendaftar_model');
+        $data['pendaftar'] = $pendaftarModel->getAllPendaftar();
+        
+        $this->view('hasil', $data); 
+    }
     private function uploadFoto() {
         if (!isset($_FILES['foto']) || $_FILES['foto']['error'] != UPLOAD_ERR_OK) return false;
         $file = $_FILES['foto'];

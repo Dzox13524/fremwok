@@ -23,11 +23,16 @@ class Pendaftar_model {
         $this->db->bind('kota', $data['kota']);
         $this->db->bind('alamat', $data['alamat']);
         $this->db->bind('jenis_kelamin', $data['jenis_kelamin']);
-        
         $this->db->bind('foto', $data['foto']);
         $this->db->bind('tanda_tangan', $data['tanda_tangan']);
 
         $this->db->execute();
         return $this->db->rowCount();
+    }
+
+    public function getAllPendaftar() {
+        $this->db->query('SELECT * FROM ' . $this->table . ' ORDER BY id DESC');
+        
+        return $this->db->resultSet(); 
     }
 }
